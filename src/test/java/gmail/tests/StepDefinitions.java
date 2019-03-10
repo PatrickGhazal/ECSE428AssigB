@@ -157,11 +157,6 @@ public class StepDefinitions {
     	System.out.println("Clicked on Send !");
     }
 
-    @And("^the system sets the empty string as subject$")
-    public void emptySubject() throws Throwable {
-    	setSubject(-1);
-    }
-
     @And("^the email is not sent$")
     public void emailNotSent() throws Throwable {
     	System.out.println("The email was not sent !");
@@ -182,12 +177,17 @@ public class StepDefinitions {
     public void emptyBody() throws Throwable {
     	setBody(-1);
     }
+    
+    @Then("^the system sets the empty string as subject$")
+    public void emptySubject() throws Throwable {
+    	setSubject(-1);
+    }
 
     @Then("^I cannot click on Send$")
     public void cantClickSend() throws Throwable {
     	System.out.println("Cannot click on Send !");
     }
-    
+
     
     // Helper functions
     private void setupSeleniumWebDrivers() throws MalformedURLException {
@@ -207,7 +207,7 @@ public class StepDefinitions {
  			   .until(ExpectedConditions.elementToBeClickable(By.name("password")))
  			   .sendKeys(gmailPass);
 
-    	driver.findElement(By.id("passwordNext")).click();
+    	driver.findElement(By.cssSelector("div[role='button'][id='passwordNext']")).click();
     	System.out.println("Logged in !");
     }
 
