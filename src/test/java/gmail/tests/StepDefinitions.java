@@ -1,12 +1,9 @@
 package gmail.tests;
 
 import java.net.MalformedURLException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,7 +26,7 @@ public class StepDefinitions {
     private final String attach2 = "";
     private final String attach3 = "";
     
-    private int currNumberOfSent = 0;
+    private int currNumberOfSent = 0; //used to determine whether the email was sent
     
 
     /* 
@@ -41,7 +38,7 @@ public class StepDefinitions {
     // Given
     @Given("^I am on the Gmail homepage$")
     public void gmailHomePage() throws Throwable {
-    	setupSeleniumWebDrivers();
+    	setupSeleniumWebDrivers(); //due to the if statement in that method's body, this is only ever executed once
     	driver.get(gmailHomePage);
     	login();
     	System.out.println("Accessed Gmail Home Page !");
@@ -93,6 +90,7 @@ public class StepDefinitions {
     
     @And("^I set Subject ([0-9]) as subject$")
     public void andSetSubj(int subjNum) throws Throwable {
+    	 //The behaviour is the same as 'I set subject [...]' in Then
     	setSubject(subjNum);
     }
 
@@ -136,6 +134,9 @@ public class StepDefinitions {
     public void emailIsSent() throws Throwable {
     	
     	driver.get("https://mail.google.com/mail/#sent");
+    	
+    	// class = 'zA yO' corresponds to the sent emails in the Sent box. This creates a list
+    	// of them and computes its size to determine how many emails are in the Sent box at that time.
     	
     	int newNumberOfSent = new WebDriverWait(driver, 10)
 		   .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("tr[class='zA yO']")))
